@@ -1,0 +1,12 @@
+<div id="stred">
+<h1>Editace dluhu</h1>
+
+<%= render 'form' %>
+<%if !params["customer_id"].present? %>
+    <%= link_to 'Detail', customer_dluh_path(session[:customer_id],@dluh) %> |
+    <%= link_to 'Zpět', customer_dluhs_path(session[:customer_id]) %>
+<% else %>
+    <%= link_to 'Detail', dluh_path(@dluh) %> |
+    <%= link_to 'Zpět', dluhs_path %> 
+<% end %>
+</div>

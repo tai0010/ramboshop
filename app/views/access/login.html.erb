@@ -1,0 +1,24 @@
+<% @page_title = "Přihlášení" %>
+<h2>Přihlášení</h2>
+<div class="login">
+  <%= form_tag(:action => 'attempt_login') do %>
+  <table>
+    <tr>
+      <td><%= label_tag(:email) %></td>
+      <td><%= text_field_tag(:email) %></td>
+    </tr>
+    <tr>
+      <td><%= label_tag(:password) %></td>
+      <td><%= password_field_tag(:password) %></td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+      <% if flash[:notice] %>
+    <div id="notice"><%= flash[:notice] %></div>
+<% end %>
+      <td><%= submit_tag("Příhlásit se") %></td>
+    </tr>
+  </table>
+  <% end %>
+  <%=link_to "Zapomenute heslo?", :action=>'zapomenute_heslo' %>
+</div>

@@ -1,0 +1,25 @@
+// Place all the styles related to the Ppls controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+tr.zaplaceno td{
+    background-color: green; color: black;
+}
+
+tr.nezaplaceno td{
+    background-color: red; color: black;
+}
+
+#stred{
+    margin:10px;
+    
+}
+
+#formular{
+    width:500px;
+}
+
+a:link.a {color: black} 
+
+a:visited.a {color: black} 
+
+

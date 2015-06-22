@@ -1,0 +1,211 @@
+
+  <div class="row">
+    <div id="main">
+  
+      <h1>Seznam zákazníků</h1>
+      
+      <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingOne">
+            <h4 class="panel-title">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                Filtrování
+              </a>
+            </h4>
+          </div>
+          <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body">
+              <%=form_tag customers_path, :method => 'get', :html => {:class => "form-horizontal"} do %>
+                <strong>Datum</strong><br>
+                <%= check_box('datum', 'check', :class=>'datum')%>
+                  <div class="dates">
+                    <div class="form-group">
+                      <strong>Datum od:</strong><br>
+                      <%= date_select('range', 'start_date', :order => [:month, :day, :year])%>
+                    </div>  
+                    <div class="form-group">
+                      <strong>Datum do:</strong><br>
+                      <%= date_select('range', 'end_date', :order => [:month, :day, :year])%>     
+                    </div>
+                  </div>
+                    <br>
+                <strong>Barvy</strong><br>
+                <%= check_box('barvy', 'check', :class=>"barva")%><br>
+                <div class="barvy">
+                    <strong>Červená</strong><br>
+                    <%= check_box('cervena', 'check')%><br>
+                    
+                    <strong>Modrá</strong><br>
+                    <%= check_box('modra', 'check')%><br>
+                    
+                    <strong>Oranžová</strong><br>
+                    <%= check_box('oranzova', 'check')%><br>
+                    
+                    <strong>Růžová</strong><br>
+                    <%= check_box('ruzova', 'check')%><br>
+                    
+                    <strong>Bílá</strong><br>
+                    <%= check_box('bila', 'check')%><br>
+                </div>   
+                <br>
+        <div class="form-group">
+          <%= submit_tag 'Filtrovat',:class=>'btn btn-primary' %>
+        </div>
+      <% end %>
+      <%=button_to 'Zrušit filtry', customers_path, :method => 'get', :class=>'btn btn-primary'%>
+            </div>
+          </div>
+        </div>
+        </div>
+         <%=form_tag customers_path, :method => 'get', :html => {:class => 'form-inline'} do %>
+           
+           <%= text_field_tag('search[word]',nil) %>&nbsp;<%= submit_tag 'Hledat',:class=>'btn btn-primary' %>
+
+         <%end%>
+         <%=button_to 'Zobrazit všechny zákazníky', customers_path, :method => 'get', :class=>'btn btn-primary'%>
+      <table class="main table table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th><%= sortable "jmeno", "Jméno" %></th>
+            <th><%= sortable "prijmeni", "Příjmení" %></th>
+            <th><%= sortable "mobcislo", "Telefonní číslo" %></th>
+            <th>Poslední poznámka</th>
+            <th><%= sortable "datumkontaktu", "Datum kontaktu" %></th>
+            <th><%= sortable "kontaktovan", "Kontaktován" %></th>
+            <th><%= sortable "odpoved", "Odpověď" %></th>
+            <th><%= sortable "rating", "Hodnocení" %></th>
+            <th colspan="4"></th>
+          </tr>
+        </thead>
+      
+        <tbody class="table-hover">
+          
+          
+          <% @customers.each do |customer| %>
+          <% @count += 1%>
+            <tr class="<%=customer.barva %>">
+              <td><%= @count%></td>
+              <td><%= customer.jmeno %></td>
+              <td><%= customer.prijmeni %></td>
+              <td><%= customer.mobcislo if customer.mobcislo.present? %></td>
+              <td><div class="show-tooltip" title="<%if customer.poznamkas.present?%><%=customer.poznamkas.order("created_at DESC").map{|a| "#{a.datum.day}-#{a.datum.month}-#{a.datum.year}:  #{a.poznamka}"}.join("\n").html_safe %><%else%>Zákazník nemá žádnou poznámku<%end%>"><%= truncate(customer.poznamkas.last.poznamka, length: 20) if customer.poznamkas.present?%></div></td>
+              <td><%= customer.datumkontaktu.day %>-<%= customer.datumkontaktu.month %>-<%= customer.datumkontaktu.year %></td>
+              <td><%if customer.kontaktovan %>Ano <% else%>Ne <%end%></td>
+              <td><%if customer.odpoved %>Ano <% else%>Ne <%end%></td>
+              <td class="rating">
+                <div class="acidjs-rating-stars ">
+                    <%=form_tag url_for(:controller=>"customers",:action=>"changeRating"), :method=>:post do %>
+                        <input disabled="disabled" type="radio" name="group-3" id="group-3-0" value="5" <%if customer.rating.present? && customer.rating.rating == 5%>checked="checked"<%end%> onclick="this.form.submit();" /><label for="group-3-0"></label><!--
+                        --><input  type="radio" name="group-3" id="group-3-1" value="4" <%if customer.rating.present? && customer.rating.rating == 4%>checked="checked"<%end%> onclick="this.form.submit();" /><label for="group-3-1"></label><!--
+                        --><input type="radio" name="group-3" id="group-3-2" value="3" <%if customer.rating.present? && customer.rating.rating == 3%>checked="checked"<%end%> onclick="this.form.submit();" /><label for="group-3-2"></label><!--
+                        --><input type="radio" name="group-3" id="group-3-3" value="2" <%if customer.rating.present? && customer.rating.rating == 2%>checked="checked"<%end%> onclick="this.form.submit();" /><label for="group-3-3"></label><!--
+                        --><input type="radio" name="group-3" id="group-3-4"  value="1" <%if customer.rating.present? && customer.rating.rating == 1%>checked="checked"<%end%> onclick="this.form.submit();" /><label for="group-3-4"></label>
+                           <input id="customer_id" name="customer_id" type="hidden" value="<%=customer.id%>" />
+                    <%end%>
+                </div>
+              </td>
+              <td><%= link_to 'Editace', edit_customer_path(customer) %></td>
+              <td><%= link_to 'Detaily', customer %></td>
+              <td><%= link_to 'Poznámky', customer_poznamkas_path(customer) %></td>
+              <td><%= link_to 'Nákupy', customer_nakups_path(customer) %></td>
+              <td><%= link_to 'Dluhy', customer_dluhs_path(customer) %></td>
+              <td><%= link_to 'Dobírky', customer_ppls_path(customer) %></td>
+              <td><%= link_to 'Odstranění zákazníka', customer, method: :delete, data: { confirm: 'Jste si jist?' } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @customers %>
+      <br>
+      
+      <%= link_to 'Nový zákazník', new_customer_path %><br>
+      <%= link_to("Zpět do menu", :controller => 'access', :action => 'index') %><br>
+      <%= link_to("Odhlášení", :controller => 'access', :action => 'logout') %><br>
+      
+    </div><br><br><br><br><br><br><br><br>
+    <div id="prave">
+      <strong>Zákazníci ke kontaktu</strong><br>
+       <table class="table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+      
+        <tbody class="table-hover">
+          <% @customers_to_contact.each do |customer| %>
+            <tr class="<%=customer.kontroladata%>">
+              <td><%= customer.jmeno %>&nbsp;<%= customer.prijmeni %>&nbsp;(<%= distance_of_time_in_words(DateTime.now-30, customer.datumkontaktu)  %>)</td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+<script>
+$(document).ready(function()
+{
+   $('.table tr').each(function(i,e)
+   {
+      $(e).children('td:not(.rating)').click(function()
+      {
+         //here we are working on a td element, that's why we need
+         //to refer to its parent (tr) in order to find the <a> element
+         var href =  $(this).closest("tr").find("a").attr("href");
+         if(href)
+         {
+            window.location = href;
+         }              
+      });
+   });
+});
+</script>
+
+<script>
+$(document).ready(function(){
+
+		//Hide div w/id extra
+	   $(".barvy").css("display","none");
+
+		// Add onclick handler to checkbox w/id checkme
+	   $(".barva").click(function(){
+
+		// If checked
+		if ($(".barva").is(":checked"))
+		{
+			//show the hidden div
+			$(".barvy").show("fast");
+		}
+		else
+		{
+			//otherwise, hide it
+			$(".barvy").hide("fast");
+		}
+	  });
+
+	});
+	$(document).ready(function(){
+
+		//Hide div w/id extra
+	   $(".dates").css("display","none");
+
+		// Add onclick handler to checkbox w/id checkme
+	   $(".datum").click(function(){
+
+		// If checked
+		if ($(".datum").is(":checked"))
+		{
+			//show the hidden div
+			$(".dates").show("fast");
+		}
+		else
+		{
+			//otherwise, hide it
+			$(".dates").hide("fast");
+		}
+	  });
+
+	});
+</script>

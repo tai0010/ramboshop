@@ -1,0 +1,45 @@
+<div id="stred">
+<h1>Dluhy</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <%if !params[:customer_id].present? %><th>Zákazník</th><%end%>
+      <th><%= sortable "dluh", "Dluh" %></th>
+      <th><%= sortable "poznamka", "Poznámka" %></th>
+      <th><%= sortable "datum", "Datum" %></th>
+      <th><%= sortable "active", "Aktivní" %></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody class="table-hover">
+    <% @dluhs.each do |dluh| %>
+      <tr>
+        <%if !params[:customer_id].present? %><td><%=dluh.customer.name_with_initial %></td><%end%>
+        <td><%= dluh.dluh %></td>
+        <td><%= dluh.poznamka %></td>
+        <td><%= dluh.created_at.day %>-<%= dluh.created_at.month %>-<%= dluh.created_at.year %></td>
+        <td><%if dluh.active %>Ano<%else%>Ne<%end%></td>
+        <%if @customer.present? %>
+          <td><%= link_to 'Detail', customer_dluh_path(@customer.id,dluh.id) %></td>
+          <td><%= link_to 'Editace', edit_dluh_path(dluh) %></td>
+        <% else %>
+          <td><%= link_to 'Detail', dluh_path(dluh.id) %></td>
+          <td><%= link_to 'Editace', edit_dluh_path(dluh) %></td>
+        <% end %>
+        <td><%= link_to 'Smazání', dluh, method: :delete, data: { confirm: 'Jste si jist touto akcí?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%if @customer.present? %>
+  <%= link_to 'Nový dluh', new_customer_dluh_path(@customer.id) %>
+  <%= link_to 'Zpět', customers_path %>
+<% else %>
+  <%= link_to 'Nový dluh', new_dluh_path %>
+  <%= link_to 'Zpět', access_index_path %>
+<% end %>
+</div>

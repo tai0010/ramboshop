@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nazev: MyString
+  popis: MyString
+  pocet_kusu: 1
+  cena_za_kus: 1.5
+
+two:
+  nazev: MyString
+  popis: MyString
+  pocet_kusu: 1
+  cena_za_kus: 1.5

@@ -1,0 +1,33 @@
+<%= form_for(@zbozi) do |f| %>
+  <% if @zbozi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@zbozi.errors.count, "error") %> prohibited this zbozi from being saved:</h2>
+
+      <ul>
+      <% @zbozi.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :nazev %><br>
+    <%= f.text_field :nazev %>
+  </div>
+  <div class="field">
+    <%= f.label :popis %><br>
+    <%= f.text_field :popis %>
+  </div>
+  <div class="field">
+    <%= f.label :pocet_kusu %><br>
+    <%= f.number_field :pocet_kusu %>
+  </div>
+  <div class="field">
+    <%= f.label :cena_za_kus %><br>
+    <%= f.text_field :cena_za_kus %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

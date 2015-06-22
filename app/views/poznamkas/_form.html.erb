@@ -1,0 +1,25 @@
+<%= form_for(@poznamka) do |f| %>
+  <% if @poznamka.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@poznamka.errors.count, "error") %> prohibited this poznamka from being saved:</h2>
+
+      <ul>
+      <% @poznamka.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <strong>Datum</strong><br>
+    <%= f.date_select :datum,class: "form-control" %>
+  </div><br>
+  <div class="field">
+    <strong>Poznámka</strong><br>
+    <%= f.text_area :poznamka,class: "form-control" %>
+  </div><br>
+  <div class="actions">
+    <%= submit_tag 'Uložit', :class=>'btn btn-primary' %>
+  </div><br>
+<% end %>

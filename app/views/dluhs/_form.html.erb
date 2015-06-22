@@ -1,0 +1,29 @@
+<%= form_for(@dluh) do |f| %>
+  <% if @dluh.errors.any? %>
+    <div id="error_explanation">
+      <h3>Opravte prosím následující problémy:</h3>
+
+      <ul>
+      <% @dluh.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    Výše dluhu<br>
+    <%= f.number_field :dluh,class: "form-control" %>
+  </div>
+  <div class="field">
+    Poznámka<br>
+    <%= f.text_area :poznamka,class: "form-control" %>
+  </div>
+<div class="field">
+    Aktivní<br>
+    <%= f.check_box :poznamka,class: "form-control"%>
+  </div>
+  <div class="actions">
+    <%= submit_tag "Uložit", :class=>'btn btn-primary' %>
+  </div>
+<% end %>

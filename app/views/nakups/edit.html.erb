@@ -1,0 +1,12 @@
+<div id="stred">    
+    <h1>Editace nákupu</h1>
+    
+    <%= render 'form' %>
+    <%if params[:customer_id].present? %>
+        <%= link_to 'Detaily', customer_nakup_path, id: params[:id],:class=>'btn btn-primary' %> 
+        <%= link_to 'Zpět', :back,:class=>'btn btn-primary' %>
+    <%else%>
+        <%= link_to 'Detaily', nakup_path, id: params[:id],:class=>'btn btn-primary' %> 
+        <%= link_to 'Zpět', :back,:class=>'btn btn-primary' %>
+    <%end%>
+</div>

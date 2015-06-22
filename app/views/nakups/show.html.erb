@@ -1,0 +1,57 @@
+<div id="stred">  
+  <h1>Detail nákupu</h1><br>
+  <p id="notice"><%= notice %></p>
+  
+  <%if !params[:customer_id].present? %>
+  <p>
+    <strong>Zákazník:</strong>
+    <%= @nakup.customer.name_with_initial %>
+    </p>
+    <%end%>
+    
+  <p>
+    <strong>Cena nákupu:</strong>
+    <%= @nakup.cena_nakupu %> Kč
+  </p>
+  
+  <p>
+    <strong>Datum nákupu:</strong>
+    <%= @nakup.datum_nakupu.day %>-<%= @nakup.datum_nakupu.month %>-<%= @nakup.datum_nakupu.year %>
+  </p>
+  
+  <p>
+    <strong>Plánovaný nákup:</strong>
+    <%if @nakup.planovanynakup %>Ano<%else%>Ne<%end%>
+  </p>
+  
+  <h3>Položky nákupu</h3>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Název</th>
+        <th>Popis</th>
+        <th>Počet kusů</th>
+        <th>Cena za kus</th>
+        <th colspan="4"></th>
+      </tr>
+    </thead>
+  
+    <tbody class="table-hover">
+      <% @nakup.zbozis.each do |z| %>
+        <tr>
+          <td><%= z.nazev %></td>
+          <td><%= z.popis %></td>
+          <td><%= z.pocet_kusu %></td>
+          <td><%= z.cena_za_kus %></td>
+          
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Editace', :action=>'edit', 'id'=>@nakup.id,:class=>'btn btn-primary' %>
+  <%if params[:customer_id].present? %>
+    <%= link_to 'Zpět', customer_nakups_path,:class=>'btn btn-primary' %>
+  <%else%>
+    <%= link_to 'Zpět', nakups_path,:class=>'btn btn-primary' %>
+  <%end%>
+</div>

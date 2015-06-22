@@ -1,0 +1,115 @@
+
+    <h1>Nový záznam</h1><br>
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Přidat zákazníka
+</button>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Nový zákazník</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag url_for(:controller=>'customers', :action=>'createfromppls'), :class=> "form-horizontal" do %>
+          <% if @customer.present? %>
+            <% if @customer.errors.any? %>
+              <div id="error_explanation">
+                <h2>Opravte následující chyby:</h2>
+          
+                <ul>
+                <% @customer.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+          <% end %>
+            <br>
+            <fieldset>
+              <div id='stred'>
+                  <div class="form-group">
+                    <label for="jmeno">Jméno</label><br>
+                    <%= text_field_tag('customer[jmeno]',nil, class: "form-control") %><br>
+                  </div>
+                  <div class="form-group">
+                    <label for="prijmeni">Příjmení</label><br>
+                    <%= text_field_tag('customer[prijmeni]',nil, class: "form-control") %><br>
+                  </div>
+                  <div class="form-group">
+                    <label for="adresa">Adresa</label><br>
+                    <%= text_field_tag('customer[adresa]',nil, class: "form-control") %><br>
+                  </div>
+                  <div class="form-group">
+                    <label for="mesto">Město</label><br>
+                    <%= text_field_tag('customer[mesto]',nil, class: "form-control") %><br>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="psc">PSČ</label><br>
+                    <%= number_field_tag('customer[psc]',nil, class: "form-control") %>
+                    <br>
+                  </div>
+                  <div class="form-group">
+                    <label for="mobcislo">Telefonní číslo</label><br>
+                    <%= number_field_tag('customer[mobcislo]',nil, class: "form-control") %>
+                    <br>
+                  </div>
+                  <div class="form-group">
+                    <label for="datumkontaktu">Datum kontaktu</label><br>
+                    <%= date_select('customer','datumkontaktu', class: "form-control") %>
+                    <br>
+                  </div>
+                  <div class="form-group">
+                    <label for="email">Email</label><br>
+                    <%= text_field_tag('customer[email]',nil, class: "form-control") %><br>
+                  </div>
+                  <div class="form-group">
+                    <label for="kontaktovan">Kontaktován</label><br>
+                    <%= check_box('customer', 'kontaktovan', class: "form-control") %><br>
+                  </div>
+                  <div class="form-group">
+                    <label for="odpoved">Odpověď</label><br>
+                    <%= check_box('customer','odpoved', class: "form-control") %><br>
+                  </div>
+                  <div class="form-group">
+                    <strong>Hodnocení</strong><br>
+                    <div id="ratingsForm">
+                      <div class="stars">
+                          <input type="radio" name="star1" class="star-1" id="star-1"   />
+                          <label class="star-1" for="star-1">1</label>
+                          <input type="radio" name="star2" class="star-2" id="star-2"  />
+                          <label class="star-2" for="star-2">2</label>
+                          <input type="radio" name="star3" class="star-3" id="star-3"  />
+                          <label class="star-3" for="star-3">3</label>
+                          <input type="radio" name="star4" class="star-4" id="star-4"  />
+                          <label class="star-4" for="star-4">4</label>
+                          <input type="radio" name="star5" class="star-5" id="star-5"  />
+                          <label class="star-5" for="star-5">5</label>
+                          <span></span>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+            </fieldset>
+            <br>
+            <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
+        <%= submit_tag 'Uložit', :class=>'btn btn-primary' %>
+      </div>
+          <% end %>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<br>
+<br>
+    <%= render 'form' %>
+    <%if !params[:customer_id].present? %>
+        <%= link_to 'Zpět', ppls_path %>
+    <%else%>
+        <%= link_to 'Zpět', customer_ppls_path(params[:customer_id]) %>
+    <%end%>

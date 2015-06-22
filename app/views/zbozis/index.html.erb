@@ -1,0 +1,31 @@
+<h1>Listing zbozis</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nazev</th>
+      <th>Popis</th>
+      <th>Pocet kusu</th>
+      <th>Cena za kus</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @zbozis.each do |zbozi| %>
+      <tr>
+        <td><%= zbozi.nazev %></td>
+        <td><%= zbozi.popis %></td>
+        <td><%= zbozi.pocet_kusu %></td>
+        <td><%= zbozi.cena_za_kus %></td>
+        <td><%= link_to 'Show', zbozi %></td>
+        <td><%= link_to 'Edit', edit_zbozi_path(zbozi) %></td>
+        <td><%= link_to 'Destroy', zbozi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Zbozi', new_zbozi_path %>

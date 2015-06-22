@@ -1,0 +1,61 @@
+<div id="stred">
+<h1>Editace zákazníka</h1>
+<div class="row">
+    <div class="main col-xs-6">
+        <%= render 'form' %>
+    </div>
+    <div class="col-xs-6">
+       <strong>Plánované nákupy</strong><br>
+       <table class="table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+      
+        <tbody class="table-hover">
+          <% @customer.nakups.where(:planovanynakup=>true).select(:id,:datum_nakupu).each do |customer| %>
+            <tr>
+              <td><%=link_to "#{customer.datum_nakupu.day}-#{customer.datum_nakupu.month}-#{customer.datum_nakupu.year}", :controller=>'nakups', :action=>'edit', 'id'=>customer.id  %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <strong>Poznámky</strong><br>
+       <table class="table table-hover">
+        <thead>
+          <tr>
+            <th></th>
+          </tr>
+        </thead>
+      
+        <tbody class="table-hover">
+          <% @customer.poznamkas.select(:id,:poznamka,:datum,:customer_id).order("datum DESC").each do |customer| %>
+            <tr>
+              <td><%=link_to "#{customer.datum.day}-#{customer.datum.month}-#{customer.datum.year}: #{customer.poznamka}", :controller=>'poznamkas', :action=>'edit', 'id'=>customer.id  %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+</div>
+
+<%= link_to 'Detail', @customer %> |
+<%= link_to 'Poznámky', customer_poznamkas_path(@customer.id) %> |
+<%= link_to 'Nákupy', customer_nakups_path(@customer.id) %> |
+<%= link_to 'Zpět', customers_path %>
+
+</div>
+<script>$(document).ready(function() {
+  // Make table rows clickable
+  $(".table tr").on('click', function(event) {
+    var target = $(event.target);
+    if (target.is(":not(a)")) {
+      var href = $(this).find("a").first().attr("href");
+      if(href) {
+        window.location.href = href;
+      }
+    }
+  });
+});
+</script>

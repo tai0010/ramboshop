@@ -1,0 +1,33 @@
+<div id="stred">
+<p id="notice"><%= notice %></p>
+<%if !params["customer_id"].present? %>
+  <p>
+  <strong>Zákazník:</strong>
+  <%= @dluh.customer.name_with_initial %>
+</p>
+<% end %>
+<p>
+  <strong>Dluh:</strong>
+  <%= @dluh.dluh %>
+</p>
+
+<p>
+  <strong>Poznamka:</strong>
+  <%= @dluh.poznamka %>
+</p>
+<p>
+  <strong>Aktivní:</strong>
+  <%if @dluh.active %>Ano<%else%>Ne<%end%>
+</p>
+<p>
+  <strong>Datum:</strong>
+  <%= @dluh.created_at.day %>-<%= @dluh.created_at.month %>-<%= @dluh.created_at.year %>
+</p>
+<%if @customer.present? %>
+  <%= link_to 'Editace', edit_dluh_path(@dluh) %> |
+  <%= link_to 'Zpět', customer_dluhs_path(params[:customer_id]) %>
+<% else %>
+  <%= link_to 'Editace', edit_dluh_path(@dluh) %> |
+  <%= link_to 'Zpět', dluhs_path %>
+<% end %>
+</div>

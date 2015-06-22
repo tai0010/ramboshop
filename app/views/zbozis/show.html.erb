@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nazev:</strong>
+  <%= @zbozi.nazev %>
+</p>
+
+<p>
+  <strong>Popis:</strong>
+  <%= @zbozi.popis %>
+</p>
+
+<p>
+  <strong>Pocet kusu:</strong>
+  <%= @zbozi.pocet_kusu %>
+</p>
+
+<p>
+  <strong>Cena za kus:</strong>
+  <%= @zbozi.cena_za_kus %>
+</p>
+
+<%= link_to 'Editace', edit_zbozi_path(@zbozi) %> |
+<%= link_to 'Back', zbozis_path %>

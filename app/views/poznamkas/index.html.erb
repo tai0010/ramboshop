@@ -1,0 +1,31 @@
+<div id="stred">
+  <h1>Poznámky</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th><%= sortable "datum", "Datum" %></th>
+      <th><%= sortable "poznámka", "Poznámka" %></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody class="table-hover">
+    <% @poznamkas.each do |poznamka| %>
+      <tr>
+        <td><%= poznamka.datum %></td>
+        <td><%= poznamka.poznamka %></td>
+        <td><%= link_to 'Detail', poznamka %></td>
+        <td><%= link_to 'Editace', edit_poznamka_path(poznamka) %></td>
+        <td><%= link_to 'Smazat',{ controller: "poznamkas", action: "destroy", id: poznamka.id, customer_id: poznamka.customer.id },
+                                method: :delete, data: { confirm: "Jste si jist?" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= will_paginate @poznamkas %>
+<br>
+
+<%= link_to 'Nová poznámka', new_customer_poznamka_path(params[:customer_id]), :popup => ['new_window_name', 'height=300,width=600'] %>
+<%= link_to 'Zpět', customers_path %>
+</div>

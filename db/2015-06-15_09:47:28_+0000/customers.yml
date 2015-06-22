@@ -1,0 +1,47 @@
+
+---
+customers:
+  columns:
+  - id
+  - jmeno
+  - prijmeni
+  - adresa
+  - mesto
+  - psc
+  - mobcislo
+  - datumkontaktu
+  - email
+  - kontaktovan
+  - odpoved
+  - created_at
+  - updated_at
+  - barva
+  records: 
+  - - 1
+    - Martin
+    - Taichman
+    - Nádražní 21
+    - Paskov
+    - 73921
+    - 776817480
+    - '2015-06-04'
+    - taichmanm@gmail.com
+    - false
+    - false
+    - '2015-03-11 10:53:58.144003'
+    - '2015-06-14 17:14:40.065240'
+    - modra
+  - - 7
+    - Mistr
+    - Mistr
+    - ''
+    - ''
+    - 
+    - 0
+    - '2015-06-14'
+    - ''
+    - false
+    - false
+    - '2015-06-14 16:29:58.732629'
+    - '2015-06-14 17:17:00.848033'
+    - white

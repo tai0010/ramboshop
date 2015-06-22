@@ -1,0 +1,19 @@
+
+---
+dluhs:
+  columns:
+  - id
+  - dluh
+  - poznamka
+  - created_at
+  - updated_at
+  - active
+  - customer_id
+  records: 
+  - - 10
+    - 1800.0
+    - '1'
+    - '2015-06-22 10:12:57.783115'
+    - '2015-06-22 10:12:57.783115'
+    - false
+    - 233

@@ -1,0 +1,40 @@
+<div id="stred">
+<h1>Přehled nákupů</h1>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <%if !params[:customer_id].present? %><th>Zákazník</th><%end%>
+      <th><%= sortable "cena_nakupu", "Cena nákupu" %></th>
+      <th><%= sortable "datum_nakupu", "Datum nákupu" %></th>
+      <th><%= sortable "planovanynakup", "Plánovaný nákup" %></th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody class="table-hover">
+    <% @nakups.each do |nakup| %>
+      <tr>
+        <%if !params[:customer_id].present? %><td><%=nakup.customer.name_with_initial %></td><%end%>
+        <td><%=nakup.cena_nakupu %></td>
+        <td><%= nakup.datum_nakupu.day %>-<%= nakup.datum_nakupu.month %>-<%= nakup.datum_nakupu.year %></td>
+        <td><% if nakup.planovanynakup %>Ano <%else%>Ne <%end%></td>
+        <td><%= link_to 'Detaily', :action=>'show', 'id'=>nakup.id %></td>
+        <td><%= link_to 'Editace', :action=>'edit', 'id'=>nakup.id %></td>
+        <td><%= link_to 'Smazat',{ controller: "nakups", action: "destroy",customer_id: nakup.customer.id, id: nakup.id },
+                                method: :delete, data: { confirm: "Jste si touto akcí jist?" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%if params[:customer_id].present? %>
+  <%= link_to 'Nový nákup',  new_customer_nakup_path(params[:customer_id]) %><br>
+  <%= link_to 'Zpět',  customers_path %>
+<%else%>
+  <%= link_to 'Nový nákup',  new_nakup_path %><br>
+  <%= link_to 'Zpět',  customers_path %>
+<%end%>
+
+</div>

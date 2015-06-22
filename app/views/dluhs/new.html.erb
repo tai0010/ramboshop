@@ -1,0 +1,10 @@
+<div id="stred">
+<h1>Nový dluh</h1>
+
+<%= render 'form' %>
+<%if params["customer_id"].present? %>
+    <%= link_to 'Zpět', customer_dluhs_path(params[:customer_id]) %>
+<%else%>
+    <%= link_to 'Zpět', dluhs_path %>
+<%end%>
+</div>

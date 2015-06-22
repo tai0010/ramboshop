@@ -1,0 +1,71 @@
+<div id="stred">
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Jméno:</strong>
+  <%= @customer.jmeno %>
+</p>
+
+<p>
+  <strong>Příjmení:</strong>
+  <%= @customer.prijmeni %>
+</p>
+
+<p>
+  <strong>Adresa:</strong>
+  <%= @customer.adresa %>
+</p>
+
+<p>
+  <strong>Město:</strong>
+  <%= @customer.mesto %>
+</p>
+
+<p>
+  <strong>PSČ:</strong>
+  <%= @customer.psc %>
+</p>
+
+<p>
+  <strong>Telefonní číslo:</strong>
+  <%= @customer.mobcislo if @customer.mobcislo.present? %>
+</p>
+
+<p>
+  <strong>Poslední poznámka:</strong>
+  <%= @customer.poznamkas.last.poznamka if @customer.poznamkas.present? %>
+</p>
+
+<p>
+  <strong>Datum kontaktu:</strong>
+  <%= @customer.datumkontaktu %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @customer.email %>
+</p>
+
+<p>
+  <strong>Kontaktován:</strong>
+  <%if @customer.kontaktovan %>Ano<%else%>Ne<%end%>
+</p>
+
+<p>
+  <strong>Odpověď:</strong>
+  <%if @customer.odpoved %>Ano<%else%>Ne<%end%>
+</p>
+<strong>Hodnocení:</strong>
+<div class="acidjs-rating-stars acidjs-rating-disabled">
+                    <form>
+                        <input disabled="disabled" type="radio" name="group-3" id="group-3-0" value="5" <%if @customer.rating.rating == 5%>checked="checked"<%end%> /><label for="group-3-0"></label><!--
+                        --><input disabled="disabled" type="radio" name="group-3" id="group-3-1" value="4" <%if @customer.rating.rating == 4%>checked="checked"<%end%> /><label for="group-3-1"></label><!--
+                        --><input disabled="disabled" type="radio" name="group-3" id="group-3-2" value="3" <%if @customer.rating.rating == 3%>checked="checked"<%end%> /><label for="group-3-2"></label><!--
+                        --><input disabled="disabled" type="radio" name="group-3" id="group-3-3" value="2" <%if @customer.rating.rating == 2%>checked="checked"<%end%> /><label for="group-3-3"></label><!--
+                        --><input disabled="disabled" type="radio" name="group-3" id="group-3-4"  value="1" <%if @customer.rating.rating == 1%>checked="checked"<%end%> /><label for="group-3-4"></label>
+                    </form>
+                </div><br><br>
+
+<%= link_to 'Editovat', edit_customer_path(@customer) %> |
+<%= link_to 'Zpět', customers_path %>
+</div>

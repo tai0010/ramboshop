@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cena_nakupu: 
+  datum_nakupu: 2015-03-11
+  planovanynakup: false
+
+two:
+  cena_nakupu: 
+  datum_nakupu: 2015-03-11
+  planovanynakup: false

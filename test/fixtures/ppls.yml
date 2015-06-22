@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  datum: 2015-06-01
+  castka: 1.5
+  zaplaceno: false
+  dobirka: false
+  datumOdeslani: 2015-06-01
+  cisloBaliku: MyText
+  variabilniSymbol: MyText
+
+two:
+  datum: 2015-06-01
+  castka: 1.5
+  zaplaceno: false
+  dobirka: false
+  datumOdeslani: 2015-06-01
+  cisloBaliku: MyText
+  variabilniSymbol: MyText

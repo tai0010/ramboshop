@@ -1,0 +1,180 @@
+  <%= form_tag url_for(:controller=>'nakups', :action=>'update'),:method=>:put, :class=> "form-horizontal" do %>
+    <% if @nakup.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@nakup.errors.count, "error") %> prohibited this nakup from being saved:</h2>
+  
+        <ul>
+        <% @nakup.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    
+  <h3>Položky nákupu</h3>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Název</th>
+        <th>Popis</th>
+        <th>Počet kusů</th>
+        <th>Cena za kus</th>
+        <th colspan="4"></th>
+      </tr>
+    </thead>
+  
+    <tbody class="table-hover">
+      <% @nakup.zbozis.each do |z| %>
+        <tr>
+          <td><%= z.nazev %></td>
+          <td><%= z.popis %></td>
+          <td><%= z.pocet_kusu %></td>
+          <td><%= z.cena_za_kus %></td>
+          <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal<%=z.id%>">
+  Editovat
+</button></td>
+          <td><%= link_to 'Smazat',{ controller: "zbozis", action: "destroy", id: z.id, nakup_id: @nakup.id },
+                                method: :delete, data: { confirm: "Jste si jist?" } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalZ">
+  Přidat položku
+</button>
+  <h3>Nákup</h3>
+    <div class="field">
+      <strong>Cena nákupu</strong><br>
+      <%=@nakup.cena_nakupu%> Kč
+    </div><br>
+    <div class="field">
+      <strong>Datum nákupu</strong><br>
+      <%= date_select('nakup','datum_nakupu',:value=>@nakup.datum_nakupu, class: "form-control") %><br>
+    </div><br>
+    <div class="field">
+      <strong>Plánovaný nákup</strong><br>
+      <%= check_box('nakup','planovanynakup', :value=>@nakup.planovanynakup,class: "form-control") %><br>
+    </div>
+    
+    <div class="actions">
+      <%= submit_tag 'Uložit', :class=>'btn btn-primary' %>
+    </div>
+  <% end %>
+<% @nakup.zbozis.each do |z| %>  
+<!-- Modal -->
+<div class="modal fade" id="myModal<%=z.id%>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Editace</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag url_for(:controller=>'nakups', :action=>'updateZboziFromNakup'),:method=>:post,"id"=>z.id, :class=> "form-horizontal" do %>
+          <% if @customer.present? %>
+            <% if @customer.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@customer.errors.count, "chyb") %> prohibited this customer from being saved:</h2>
+          
+                <ul>
+                <% @customer.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+          <% end %>
+            <br>
+            <fieldset>
+              <div class='center'>
+                  <div class="form-group">
+                    <%= label_tag :Název %><br>
+                    <%= text_field_tag('zbozi[nazev]',z.nazev, class: "form-control") %><br>
+                  </div>
+                  <div class="form-group">
+                    <%= label_tag :Popis %><br>
+                    <%= text_area_tag('zbozi[popis]',z.popis, class: "form-control") %><br>
+                  </div>
+                  <div class="form-group">
+                    <label for="pocet_kusu">Počet kusů</label><br><br>
+                    <%= number_field_tag('zbozi[pocet_kusu]',z.pocet_kusu, class: "form-control") %>
+                    <br>
+                  </div>
+                  <div class="form-group">
+                    <label for="cena_za_kus">Cena za kus</label><br><br>
+                    <%= number_field_tag('zbozi[cena_za_kus]',z.cena_za_kus, class: "form-control") %><br>
+                  </div>
+              </div>
+            </fieldset>
+            <input id="zbozi_id" name="zbozi_id" type="hidden" value="<%=z.id%>" />
+            <input id="nakup_id" name="nakup_id" type="hidden" value="<%=@nakup.id%>" />
+            <br>
+            <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Zavřít</button>
+        <%= submit_tag 'Uložit změny',:nakup_id=>@nakup.id, :class=>'btn btn-primary' %>
+      </div>
+          <% end %>
+      </div>
+      
+    </div>
+  </div>
+</div>
+<%end%>
+
+<!-- Modal -->
+<div class="modal fade" id="myModalZ" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Přidat zboží</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_tag url_for(:controller=>'nakups', :action=>'addZboziFromEdit'), :class=> "form-horizontal", "id"=>"zbozi-form" do %>
+          <% if @customer.present? %>
+            <% if @customer.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@customer.errors.count, "chyb") %> prohibited this customer from being saved:</h2>
+          
+                <ul>
+                <% @customer.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+          <% end %>
+            <br>
+            <fieldset>
+              <div class='center'>
+                  <div class="form-group">
+                    <%= label_tag :Název %><br>
+                    <%= text_field_tag('zbozi[nazev]',nil, class: "form-control") %><br>
+                  </div>
+                  <div class="form-group">
+                    <%= label_tag :Popis %><br>
+                    <%= text_area_tag('zbozi[popis]',nil, class: "form-control") %><br>
+                  </div>
+                  <div class="form-group">
+                    <label for="pocet_kusu">Počet kusů</label><br><br>
+                    <%= number_field_tag('zbozi[pocet_kusu]',nil, class: "form-control") %>
+                    <br>
+                  </div>
+                  <div class="form-group">
+                    <label for="cena_za_kus">Cena za kus</label><br><br>
+                    <%= number_field_tag('zbozi[cena_za_kus]',nil, class: "form-control") %><br>
+                  </div>
+              </div>
+            </fieldset>
+            <input id="nakup_id" name="nakup_id" type="hidden" value="<%=@nakup.id%>" />
+            <br>
+            <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <%= submit_tag 'Přidat zboží',:nakup_id=>@nakup.id, :class=>'btn btn-primary' %>
+      </div>
+          <% end %>
+      </div>
+      
+    </div>
+  </div>
+</div>

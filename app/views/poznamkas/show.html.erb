@@ -1,0 +1,16 @@
+<div id="stred">
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Datum:</strong>
+  <%= @poznamka.datum %>
+</p>
+
+<p>
+  <strong>Poznámka:</strong>
+  <%= @poznamka.poznamka %>
+</p>
+
+<%= link_to 'Editace', edit_poznamka_path(@poznamka.id) %> |
+<%= link_to 'Zpět', customer_poznamkas_path(@poznamka.customer.id) %>
+</div>

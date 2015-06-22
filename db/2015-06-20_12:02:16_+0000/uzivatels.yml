@@ -1,0 +1,20 @@
+
+---
+uzivatels:
+  columns:
+  - id
+  - password_digest
+  - created_at
+  - updated_at
+  - email
+  records: 
+  - - 1
+    - "$2a$10$.uBZkwjjhUSWi67LjU5suudGAoWBfqVdnBGEdQEkCXMkPvCSTQHp."
+    - '2015-03-11 09:11:17.869767'
+    - '2015-03-11 09:11:17.869767'
+    - taichmanm@gmail.com
+  - - 2
+    - "$2a$10$XAuG19GtQyyVn4I2zj7lwOou1Klw.YaCeHF9G2gytEq64saZCc922"
+    - '2015-06-01 18:52:47.260662'
+    - '2015-06-01 19:07:02.057720'
+    - info@ramboshop.cz

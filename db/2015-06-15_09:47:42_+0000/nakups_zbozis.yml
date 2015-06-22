@@ -1,0 +1,17 @@
+
+---
+nakups_zbozis:
+  columns:
+  - nakup_id
+  - zbozi_id
+  records: 
+  - - 2
+    - 6
+  - - 5
+    - 12
+  - - 5
+    - 13
+  - - 6
+    - 23
+  - - 7
+    - 23
